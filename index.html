@@ -66,7 +66,7 @@
   
   .input-group { margin-bottom: 16px; }
   .input-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: #e0e0e0; letter-spacing: 0.5px; }
-  .input-group label span { color: #888; font-size: 10px; font-weight: 300;}
+  .input-group label span { color: #aaa; font-size: 11px; font-weight: 300;}
   .input-group input, .input-group textarea, .input-group select {
     width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.15);
     background: rgba(0, 0, 0, 0.3); color: white; font-family: 'Poppins', sans-serif;
@@ -130,7 +130,11 @@
   }
   @keyframes floatHeart { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-15px) scale(1.05); } }
 
-  .interaction-area { margin-top: auto; margin-bottom: 8vh; display: flex; flex-direction: column; align-items: center; position: relative; }
+  /* Touch-action none is crucial for mobile drag without scrolling */
+  .interaction-area { 
+    margin-top: auto; margin-bottom: 8vh; display: flex; flex-direction: column; 
+    align-items: center; position: relative; touch-action: none; padding: 20px;
+  }
   .handle { cursor: grab; transition: stroke 0.3s; }
   .handle:active { cursor: grabbing; }
   
@@ -156,19 +160,20 @@
   }
   .screen-2.active { opacity: 1; pointer-events: all; z-index: 3; }
 
-  /* 🌹 Rose Petal Animation CSS */
+  /* 🌹 ADVANCED Rose Petal Animation */
   #petals-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0; }
   .petal {
-    position: absolute; top: -10vh; width: 15px; height: 15px;
+    position: absolute; top: -10vh; width: 16px; height: 16px;
     background: linear-gradient(135deg, #ff4d6d, #c9184a);
     border-radius: 15px 0 15px 0; /* Rose petal shape */
     opacity: 0.8; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     animation: fallingPetal linear infinite;
   }
   @keyframes fallingPetal {
-    0% { transform: translateY(-10vh) rotate(0deg) scale(0.6); opacity: 0; }
-    10% { opacity: 0.9; }
-    100% { transform: translateY(110vh) rotate(360deg) scale(1.2); opacity: 0; }
+    0% { transform: translateY(-10vh) translateX(0) rotate(0deg) scale(0.6); opacity: 0; }
+    20% { opacity: 0.9; }
+    50% { transform: translateY(45vh) translateX(25px) rotate(180deg) scale(1); }
+    100% { transform: translateY(110vh) translateX(-25px) rotate(360deg) scale(1.2); opacity: 0; }
   }
 
   .tree-bg { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); opacity: 0.15; z-index: -1; }
@@ -176,10 +181,10 @@
   .screen-2.active .tree-path { stroke-dashoffset: 0; }
 
   .avatar-img { 
-    width: 110px; height: 110px; border-radius: 50%; object-fit: cover; 
+    width: 120px; height: 120px; border-radius: 50%; object-fit: cover; 
     border: 4px solid var(--text-accent); margin-bottom: 20px; display: none; 
     box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 15px var(--text-accent); 
-    opacity: 0; transform: translateY(20px) scale(0.9); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s;
+    opacity: 0; transform: translateY(30px) scale(0.8); transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s;
     z-index: 2;
   }
   
@@ -190,26 +195,19 @@
   }
   
   .receiver-text { 
-    font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 5px; 
+    font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; margin-bottom: 5px; 
     opacity: 0; transform: translateY(20px); transition: all 0.8s ease 1s; z-index: 2;
   }
   
   .bday-text { 
-    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 60px; line-height: 1.05; 
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 65px; line-height: 1.05; 
     margin: 0 0 20px 0; text-shadow: 0px 10px 20px rgba(0,0,0,0.6); 
     background: linear-gradient(to bottom, #ffffff, var(--text-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    opacity: 0; transform: translateY(20px); transition: all 0.8s ease 1.2s; z-index: 2;
-  }
-  
-  .countdown-box { 
-    font-size: 15px; font-weight: 500; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
-    padding: 10px 25px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); 
-    margin-bottom: 20px; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    opacity: 0; transform: translateY(20px); transition: all 0.8s ease 1.3s; z-index: 2;
+    opacity: 0; transform: translateY(20px) scale(0.9); transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s; z-index: 2;
   }
   
   .custom-msg { 
-    font-size: 14px; color: #eee; width: 90%; line-height: 1.7; font-weight: 300;
+    font-size: 15px; color: #eee; width: 90%; line-height: 1.7; font-weight: 300;
     opacity: 0; transform: translateY(20px); transition: all 0.8s ease 1.4s; z-index: 2;
   }
   
@@ -220,7 +218,7 @@
   }
 
   .screen-2.active .avatar-img, .screen-2.active .wish-text, .screen-2.active .receiver-text, 
-  .screen-2.active .bday-text, .screen-2.active .countdown-box, .screen-2.active .custom-msg, 
+  .screen-2.active .bday-text, .screen-2.active .custom-msg, 
   .screen-2.active .sender-text { opacity: 1; transform: translateY(0) scale(1); }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
@@ -246,15 +244,10 @@
     <label>Recipient's Name *</label>
     <input type="text" id="input-name" placeholder="e.g. Radhika" required>
   </div>
-  
-  <div class="input-group">
-    <label>Countdown Date & Time</label>
-    <input type="datetime-local" id="input-date">
-  </div>
 
   <div class="input-group">
-    <label>Photo URL <span>(Must end with .jpg or .png)</span></label>
-    <input type="text" id="input-img" placeholder="Paste direct image link here">
+    <label>Photo URL <span>(ImgBB and Pinterest links will auto-fix!)</span></label>
+    <input type="text" id="input-img" placeholder="Paste image link here">
   </div>
 
   <div class="input-group">
@@ -264,7 +257,7 @@
 
   <div class="input-group">
     <label>Your Name (Sender) *</label>
-    <input type="text" id="input-sender" placeholder="e.g. Raja Roy" required>
+    <input type="text" id="input-sender" placeholder="e.g. Suman" required value="Suman">
   </div>
 
   <div class="input-group">
@@ -317,15 +310,15 @@
       </svg>
     </div>
     
-    <div class="interaction-area">
-      <svg width="60" height="180" viewBox="0 0 60 180" id="svg-coil">
-        <line id="string" x1="30" y1="0" x2="30" y2="120" stroke="var(--rope-color)" stroke-width="2.5" stroke-dasharray="5 5" />
-        <circle id="pulse" cx="30" cy="120" r="18" fill="transparent" stroke="var(--pulse-color)" stroke-width="2" />
-        <circle id="pull-ring" class="handle" cx="30" cy="120" r="18" fill="transparent" stroke="#222" stroke-width="5" stroke-linecap="round"/>
-        <circle id="pull-ring-inner" class="handle" cx="30" cy="120" r="14" fill="transparent" stroke="#aaa" stroke-width="1.5"/>
-        <circle id="pull-dot" class="handle" cx="30" cy="106" r="4.5" fill="var(--pulse-color)" />
+    <div class="interaction-area" id="pull-area">
+      <svg width="80" height="180" viewBox="0 0 80 180" id="svg-coil">
+        <line id="string" x1="40" y1="0" x2="40" y2="120" stroke="var(--rope-color)" stroke-width="2.5" stroke-dasharray="5 5" />
+        <circle id="pulse" cx="40" cy="120" r="22" fill="transparent" stroke="var(--pulse-color)" stroke-width="2.5" />
+        <circle id="pull-ring" class="handle" cx="40" cy="120" r="20" fill="transparent" stroke="#222" stroke-width="6" stroke-linecap="round"/>
+        <circle id="pull-ring-inner" class="handle" cx="40" cy="120" r="15" fill="transparent" stroke="#aaa" stroke-width="1.5"/>
+        <circle id="pull-dot" class="handle" cx="40" cy="106" r="5" fill="var(--pulse-color)" />
       </svg>
-      <div class="instruction">Pull & Release</div>
+      <div class="instruction">Tap or Pull Down</div>
     </div>
   </div>
 
@@ -338,14 +331,11 @@
       <path class="tree-path" d="M50,100 Q48,70 50,50 Q45,30 30,20 M50,50 Q55,30 70,20 M45,60 Q35,45 25,45 M55,60 Q65,45 75,45 M48,35 Q40,25 35,15 M52,35 Q60,25 65,15 M25,45 Q20,35 15,35 M75,45 Q80,35 85,35" stroke-width="1.5" fill="none" stroke-linecap="round"/>
     </svg>
     
-    <!-- Avatar Image with onError handler to hide it if link is broken -->
     <img id="dynamic-avatar" class="avatar-img" src="" alt="Avatar" onerror="this.style.display='none';">
     
     <div class="wish-text">make a wish...</div>
     <div class="receiver-text" id="dynamic-name">Dear Radhika,</div>
     <div class="bday-text">Happy<br>Birthday</div>
-    
-    <div id="dynamic-timer" class="countdown-box">⏳ <span id="timerText"></span></div>
     
     <div class="custom-msg" id="dynamic-msg">to someone worth celebrating</div>
     <div class="sender-text" id="dynamic-sender">~ 03/08/2026</div>
@@ -355,10 +345,21 @@
 <button id="backToEditBtn" onclick="closePreview()">🔙 Back to Editor</button>
 
 <script>
+  // --- SMART IMAGE URL FIXER ---
+  function fixImageUrl(url) {
+    if (!url) return "";
+    // Fix for imgbb viewing links (https://ibb.co/ID -> https://i.ibb.co/ID.jpg)
+    if (url.includes('ibb.co/') && !url.includes('i.ibb.co/')) {
+      let parts = url.split('/');
+      let id = parts[parts.length - 1] || parts[parts.length - 2];
+      return `https://i.ibb.co/${id}.jpg`;
+    }
+    return url;
+  }
+
   // --- STATE & ROUTING ---
   const urlParams = new URLSearchParams(window.location.search);
   const paramName = urlParams.get('n');
-  const paramDate = urlParams.get('d');
   const paramMsg = urlParams.get('m');
   const paramSender = urlParams.get('s');
   const paramImg = urlParams.get('img');
@@ -366,53 +367,45 @@
 
   const creatorView = document.getElementById('creator-view');
   const cardView = document.getElementById('card-view');
-  let countdownInterval;
   let petalInterval;
 
   if (paramName && paramSender) {
-    // Show Card View (Received Link)
     creatorView.style.display = 'none';
     cardView.style.display = 'block';
-    setupCardData(paramName, paramDate, paramMsg, paramSender, paramImg, paramTheme);
+    setupCardData(paramName, paramMsg, paramSender, paramImg, paramTheme);
     initPullLogic();
   } else {
-    // Show Form View (Generator)
     creatorView.style.display = 'flex';
     cardView.style.display = 'none';
-    
-    // Live theme update in form background
     document.getElementById('input-theme').addEventListener('change', (e) => {
       document.body.className = e.target.value;
     });
   }
 
   // --- FORM FUNCTIONS ---
-  function setupCardData(n, d, m, s, img, t) {
+  function setupCardData(n, m, s, img, t) {
     if(t) document.body.className = t;
     document.getElementById('dynamic-name').textContent = `Dear ${n},`;
     document.getElementById('dynamic-sender').textContent = `~ ${s}`;
     document.getElementById('dynamic-msg').textContent = m || 'May every dream you hold close turn into something beautiful.';
     
-    if(img) {
-      document.getElementById('dynamic-avatar').src = img;
-      // We set display block here, but if the image fails, the onerror="" will hide it again.
+    let fixedImg = fixImageUrl(img);
+    if(fixedImg) {
+      document.getElementById('dynamic-avatar').src = fixedImg;
       document.getElementById('dynamic-avatar').style.display = 'block';
     } else {
       document.getElementById('dynamic-avatar').style.display = 'none';
     }
-
-    if(d) startCountdown(d);
   }
 
   function previewCard() {
     const n = document.getElementById('input-name').value || 'Name';
-    const d = document.getElementById('input-date').value;
     const m = document.getElementById('input-msg').value;
     const s = document.getElementById('input-sender').value || 'Sender';
     const img = document.getElementById('input-img').value;
     const t = document.getElementById('input-theme').value;
 
-    setupCardData(n, d, m, s, img, t);
+    setupCardData(n, m, s, img, t);
     
     creatorView.style.display = 'none';
     cardView.style.display = 'block';
@@ -421,17 +414,13 @@
   }
 
   function closePreview() {
-    // Reset Card Animation State
     document.getElementById('screen1').style.transform = 'none';
     document.getElementById('screen1').style.opacity = '1';
     document.getElementById('screen2').classList.remove('active');
-    updateSVG(120); // Reset string position
+    updateSVG(120); 
     
-    if(countdownInterval) clearInterval(countdownInterval);
     if(petalInterval) clearInterval(petalInterval);
-    
-    document.getElementById('dynamic-timer').style.display = 'none';
-    document.getElementById('petals-container').innerHTML = ''; // Clear petals
+    document.getElementById('petals-container').innerHTML = ''; 
 
     cardView.style.display = 'none';
     document.getElementById('backToEditBtn').style.display = 'none';
@@ -444,14 +433,12 @@
     const s = document.getElementById('input-sender').value.trim();
     if (!n || !s) return alert('Please fill in both Recipient and Your Name!');
 
-    const d = document.getElementById('input-date').value;
     const m = document.getElementById('input-msg').value.trim();
     const img = document.getElementById('input-img').value.trim();
     const t = document.getElementById('input-theme').value;
 
     const baseUrl = window.location.href.split('?')[0];
     let query = `?n=${encodeURIComponent(n)}&s=${encodeURIComponent(s)}&t=${t}`;
-    if (d) query += `&d=${encodeURIComponent(d)}`;
     if (m) query += `&m=${encodeURIComponent(m)}`;
     if (img) query += `&img=${encodeURIComponent(img)}`;
     
@@ -474,93 +461,83 @@
 
   function shareWhatsApp() {
     const link = document.getElementById('generated-link').value;
-    const text = encodeURIComponent(`I made a special interactive birthday card just for you ✨ Pull the string to open it here: ${link}`);
+    const text = encodeURIComponent(`I made a special interactive birthday card just for you ✨ Tap the ring to open it here: ${link}`);
     window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
   }
 
-  // --- COUNTDOWN LOGIC ---
-  function startCountdown(targetDateStr) {
-    let targetDate = new Date(targetDateStr).getTime();
-    let timerBox = document.getElementById('dynamic-timer');
-    let timerText = document.getElementById('timerText');
-    timerBox.style.display = 'inline-block';
-
-    if(countdownInterval) clearInterval(countdownInterval);
-    
-    countdownInterval = setInterval(() => {
-        let distance = targetDate - new Date().getTime();
-        if (distance < 0) {
-            clearInterval(countdownInterval);
-            timerBox.style.display = 'none';
-        } else {
-            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            timerText.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }
-    }, 1000);
-  }
-
-  // --- 🌹 ROSE PETAL ANIMATION ---
+  // --- 🌹 ROSE PETAL ANIMATION (ADVANCED) ---
   function createPetals() {
     const container = document.getElementById('petals-container');
     container.innerHTML = '';
     
-    // Only show petals if theme is Rose
-    if(document.body.className !== 'theme-rose') return;
+    const currentTheme = document.body.className || 'theme-rose';
+    if(!currentTheme.includes('theme-rose')) return;
 
-    let petalCount = 0;
-    const maxPetals = 25; // Keep it optimized for mobile
-    
-    petalInterval = setInterval(() => {
-      if(petalCount >= maxPetals) {
-        clearInterval(petalInterval);
-        return;
-      }
+    for (let i = 0; i < 22; i++) {
       let petal = document.createElement('div');
       petal.classList.add('petal');
       petal.style.left = Math.random() * 100 + 'vw';
-      petal.style.animationDuration = (Math.random() * 4 + 4) + 's'; // 4s to 8s fall time
-      petal.style.animationDelay = (Math.random() * 2) + 's';
+      petal.style.animationDuration = (Math.random() * 3 + 3) + 's'; 
+      petal.style.animationDelay = (Math.random() * 5) + 's';
       container.appendChild(petal);
-      
-      // Remove petal after animation to save memory
-      setTimeout(() => { petal.remove(); }, 10000);
-      petalCount++;
-    }, 300);
+    }
   }
 
-  // --- PULL STRING PHYSICS ---
+  // --- ADVANCED & EASY PULL STRING PHYSICS ---
   const ring = document.getElementById('pull-ring');
   const ringInner = document.getElementById('pull-ring-inner');
   const dot = document.getElementById('pull-dot');
   const string = document.getElementById('string');
   const pulse = document.getElementById('pulse');
+  const pullArea = document.getElementById('pull-area');
   
   let isDragging = false;
+  let hasOpened = false;
   let startY = 0;
   const baseY = 120;
   let currentY = baseY;
-  const maxY = 250; 
+  const maxY = 220; 
+  const triggerY = baseY + 45; // Super easy to pull now!
 
   function initPullLogic() {
-    ring.removeEventListener('mousedown', startDrag);
+    hasOpened = false;
+    currentY = baseY;
+    updateSVG(baseY);
+    
+    pullArea.removeEventListener('mousedown', startDrag);
     window.removeEventListener('mousemove', moveDrag);
     window.removeEventListener('mouseup', endDrag);
-    ring.removeEventListener('touchstart', startDrag);
+    pullArea.removeEventListener('touchstart', startDrag);
     window.removeEventListener('touchmove', moveDrag);
     window.removeEventListener('touchend', endDrag);
+    pullArea.removeEventListener('click', handleTap);
 
-    ring.addEventListener('mousedown', startDrag);
+    pullArea.addEventListener('mousedown', startDrag);
     window.addEventListener('mousemove', moveDrag, {passive: false});
     window.addEventListener('mouseup', endDrag);
-    ring.addEventListener('touchstart', startDrag, {passive: false});
+    pullArea.addEventListener('touchstart', startDrag, {passive: false});
     window.addEventListener('touchmove', moveDrag, {passive: false});
     window.addEventListener('touchend', endDrag);
+    pullArea.addEventListener('click', handleTap);
   }
 
+  // New Feature: TAP TO OPEN (Auto Pull)
+  const handleTap = (e) => {
+    if(hasOpened || isDragging) return;
+    hasOpened = true;
+    let autoY = baseY;
+    let autoPullInt = setInterval(() => {
+        autoY += 5;
+        updateSVG(autoY);
+        if(autoY >= triggerY + 10) {
+            clearInterval(autoPullInt);
+            triggerAnimation();
+        }
+    }, 15);
+  };
+
   const startDrag = (e) => {
+    if(hasOpened) return;
     isDragging = true;
     startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
     ring.style.stroke = "var(--pulse-color)"; 
@@ -568,25 +545,36 @@
   };
 
   const moveDrag = (e) => {
-    if (!isDragging) return;
+    if (!isDragging || hasOpened) return;
     if(e.cancelable) e.preventDefault(); 
     const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
     
-    // Smooth resistance logic
     let diff = clientY - startY;
-    currentY = baseY + (diff * 0.8); 
+    currentY = baseY + (diff * 0.9); // Feels more responsive
     
     if (currentY < baseY) currentY = baseY;
     if (currentY > maxY) currentY = maxY;
     updateSVG(currentY);
+
+    // Auto-trigger if pulled far enough without releasing
+    if(currentY >= triggerY) {
+        endDrag();
+    }
   };
 
   const endDrag = () => {
-    if (!isDragging) return;
+    if (!isDragging || hasOpened) return;
     isDragging = false;
     ring.style.stroke = "#222";
-    if (currentY > baseY + 80) { triggerAnimation(); } 
-    else { snapBack(); if(pulse) pulse.style.display = 'block'; }
+    
+    if (currentY >= triggerY) { 
+        hasOpened = true;
+        triggerAnimation(); 
+    } 
+    else { 
+        snapBack(); 
+        if(pulse) pulse.style.display = 'block'; 
+    }
   };
 
   function updateSVG(y) {
@@ -598,25 +586,25 @@
 
   function snapBack() {
     let interval = setInterval(() => {
-      currentY -= (currentY - baseY) * 0.3; 
+      currentY -= (currentY - baseY) * 0.35; 
       if (currentY <= baseY + 1) { currentY = baseY; clearInterval(interval); }
       updateSVG(currentY);
     }, 16);
   }
 
   function triggerAnimation() {
-    let bounce = baseY - 25; 
+    let bounce = baseY - 35; 
     updateSVG(bounce);
-    setTimeout(() => updateSVG(baseY), 100);
+    setTimeout(() => updateSVG(baseY), 120);
 
     const s1 = document.getElementById('screen1');
-    s1.style.transform = 'scale(1.8) translateY(-60px)';
+    s1.style.transform = 'scale(2) translateY(-70px)';
     s1.style.opacity = '0';
 
     setTimeout(() => {
       document.getElementById('screen2').classList.add('active');
       fireConfetti();
-      createPetals(); // Trigger Rose Petals Animation
+      createPetals(); 
     }, 450);
   }
 
@@ -624,9 +612,8 @@
     const duration = 6000;
     const end = Date.now() + duration;
     
-    // Get colors based on theme
     const theme = document.body.className;
-    let colors = ['#ffffff', '#ff9bc2', '#d61c60']; // Default Rose
+    let colors = ['#ffffff', '#ff9bc2', '#d61c60']; 
     if(theme === 'theme-gold') colors = ['#ffffff', '#ffd54f', '#ff8f00'];
     if(theme === 'theme-neon') colors = ['#ffffff', '#18ffff', '#00e5ff'];
 
