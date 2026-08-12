@@ -8,137 +8,239 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <style>
   :root {
-    /* Default Theme (Rose) */
-    --s1-bg: radial-gradient(circle at top, #fff3f8 0%, #ffcbe0 100%);
-    --s2-bg: radial-gradient(circle at center, #c61156 0%, #520224 100%);
+    /* 🌸 Theme: Romantic Rose (Default) */
+    --bg-main: #0a0a0a;
+    --s1-bg: radial-gradient(circle at top, #ffe6f0 0%, #ffb3d1 100%);
+    --s2-bg: radial-gradient(circle at center, #d61c60 0%, #4a001a 100%);
     --heart-1: #ff9bc2; --heart-2: #d61c60;
     --text-accent: #ffccd9; --text-main: #ffffff;
     --rope-color: #7a344d; --pulse-color: #d61c60;
+    --form-accent: #ff9bc2;
   }
 
   .theme-gold {
-    --s1-bg: radial-gradient(circle at top, #fff9e6 0%, #ffe082 100%);
-    --s2-bg: radial-gradient(circle at center, #997300 0%, #332600 100%);
-    --heart-1: #ffd54f; --heart-2: #ff8f00;
-    --text-accent: #fff3e0; --rope-color: #664d00; --pulse-color: #ff8f00;
+    /* 👑 Theme: Luxury Gold */
+    --s1-bg: radial-gradient(circle at top, #fff8e1 0%, #ffd54f 100%);
+    --s2-bg: radial-gradient(circle at center, #261f00 0%, #000000 100%);
+    --heart-1: #ffe082; --heart-2: #ff8f00;
+    --text-accent: #ffd54f; --text-main: #ffffff;
+    --rope-color: #805a00; --pulse-color: #ff8f00;
+    --form-accent: #ffd54f;
   }
 
   .theme-neon {
-    --s1-bg: radial-gradient(circle at top, #e0f7fa 0%, #80deea 100%);
-    --s2-bg: radial-gradient(circle at center, #006064 0%, #001f22 100%);
-    --heart-1: #18ffff; --heart-2: #00838f;
-    --text-accent: #18ffff; --rope-color: #00363a; --pulse-color: #18ffff;
+    /* ⚡ Theme: Cyber Neon */
+    --s1-bg: radial-gradient(circle at top, #e0f7fa 0%, #00bcd4 100%);
+    --s2-bg: radial-gradient(circle at center, #004d40 0%, #000000 100%);
+    --heart-1: #18ffff; --heart-2: #00e5ff;
+    --text-accent: #18ffff; --text-main: #ffffff;
+    --rope-color: #006064; --pulse-color: #18ffff;
+    --form-accent: #18ffff;
   }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
 
   body, html {
-    margin: 0; padding: 0; height: 100%;
-    background-color: #050505; color: white;
+    height: 100%; background-color: var(--bg-main); color: white;
     display: flex; justify-content: center; align-items: center;
     font-family: 'Poppins', sans-serif; overflow: hidden;
+    transition: background-color 0.5s ease;
   }
 
-  /* --- GENERATOR FORM VIEW --- */
+  /* --- 📝 GENERATOR FORM VIEW --- */
   .creator-view {
     display: none; flex-direction: column;
-    background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px);
-    padding: 30px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    width: 90%; max-width: 420px; max-height: 95vh; overflow-y: auto; z-index: 10;
+    background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    padding: 35px 30px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 20px rgba(255,255,255,0.02);
+    width: 90%; max-width: 420px; max-height: 90vh; overflow-y: auto; z-index: 10;
   }
-  .creator-view::-webkit-scrollbar { width: 4px; }
-  .creator-view::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
-
-  .creator-view h2 { text-align: center; font-family: 'Playfair Display', serif; color: #ff9bc2; margin: 0 0 20px 0; font-size: 24px;}
-  .input-group { margin-bottom: 12px; }
-  .input-group label { display: block; font-size: 12px; margin-bottom: 5px; color: #ddd; }
-  .input-group input, .input-group textarea, .input-group select {
-    width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(0, 0, 0, 0.4); color: white; font-family: 'Poppins', sans-serif;
-    font-size: 14px; box-sizing: border-box; outline: none; transition: 0.3s;
-  }
-  .input-group input:focus, .input-group textarea:focus { border-color: #ff9bc2; }
   
-  .btn-group { display: flex; gap: 10px; margin-top: 15px; }
-  .btn {
-    flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; font-family: 'Poppins', sans-serif;
+  .creator-view::-webkit-scrollbar { width: 5px; }
+  .creator-view::-webkit-scrollbar-thumb { background: var(--form-accent); border-radius: 10px; }
+
+  .creator-view h2 { 
+    text-align: center; font-family: 'Playfair Display', serif; 
+    color: var(--form-accent); margin: 0 0 25px 0; font-size: 26px; font-weight: 700; letter-spacing: 1px;
   }
-  .btn-primary { background: linear-gradient(45deg, #d61c60, #ff9bc2); color: white; }
-  .btn-preview { background: rgba(255,255,255,0.1); border: 1px solid #fff; color: white; }
-  .btn-whatsapp { background: #25D366; color: white; width: 100%; margin-top: 10px; }
-  .btn:active { transform: scale(0.96); }
+  
+  .input-group { margin-bottom: 16px; }
+  .input-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: #e0e0e0; letter-spacing: 0.5px; }
+  .input-group label span { color: #888; font-size: 10px; font-weight: 300;}
+  .input-group input, .input-group textarea, .input-group select {
+    width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.3); color: white; font-family: 'Poppins', sans-serif;
+    font-size: 14px; outline: none; transition: all 0.3s ease;
+  }
+  .input-group input:focus, .input-group textarea:focus, .input-group select:focus { 
+    border-color: var(--form-accent); background: rgba(0, 0, 0, 0.5); box-shadow: 0 0 10px rgba(255,255,255,0.05);
+  }
+  
+  .btn-group { display: flex; gap: 12px; margin-top: 20px; }
+  .btn {
+    flex: 1; padding: 14px; border: none; border-radius: 12px; font-weight: 600; font-size: 14px; 
+    cursor: pointer; transition: all 0.2s ease; font-family: 'Poppins', sans-serif;
+  }
+  .btn-primary { background: var(--form-accent); color: #000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+  .btn-preview { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; }
+  .btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); color: white; width: 100%; margin-top: 12px; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); border: none; }
+  .btn:active { transform: scale(0.95); }
 
-  .result-area { display: none; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); }
-  .link-box { width: 100%; padding: 10px; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: #aaa; font-size: 12px; margin-bottom: 10px; box-sizing: border-box; }
+  .result-area { display: none; margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); animation: fadeIn 0.5s ease; }
+  .link-box { 
+    width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid var(--form-accent); 
+    border-radius: 8px; color: #fff; font-size: 12px; margin-bottom: 12px; 
+  }
 
-  /* --- ACTUAL CARD VIEW --- */
+  /* --- 🎁 ACTUAL CARD VIEW --- */
   .card-container {
     display: none; width: 380px; height: 650px;
     background: var(--s1-bg); border-radius: 35px;
     position: relative; overflow: hidden;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.8); max-width: 100%; max-height: 100vh;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.2);
+    max-width: 100%; max-height: 100vh;
   }
 
-  /* Screen 1 */
+  /* Screen 1 (The Pull String) */
   .screen-1 {
     position: absolute; width: 100%; height: 100%;
     display: flex; flex-direction: column; align-items: center;
-    transition: opacity 0.6s ease, transform 0.6s ease; z-index: 2;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2;
   }
   .sparkles { position: absolute; width: 100%; height: 100%; pointer-events: none; }
-  .sparkle { position: absolute; color: var(--heart-1); opacity: 0; animation: twinkle 3s ease-in-out infinite; }
-  .s1 { top: 25%; left: 25%; animation-delay: 0s; font-size: 20px; }
-  .s2 { top: 22%; left: 65%; animation-delay: 1s; font-size: 15px; }
-  .s3 { top: 45%; left: 75%; animation-delay: 1.5s; font-size: 18px; }
-  .s4 { top: 40%; left: 20%; animation-delay: 2s; font-size: 12px; }
-  @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); } 50% { opacity: 1; transform: scale(1.2) rotate(20deg); filter: drop-shadow(0 0 5px var(--heart-1)); } }
-
-  .top-text { margin-top: 90px; font-size: 16px; color: rgba(0,0,0,0.6); font-style: italic; font-weight: 600; font-family: 'Playfair Display', serif; }
+  .sparkle { position: absolute; color: var(--heart-1); opacity: 0; animation: twinkle 3s ease-in-out infinite; font-size: 18px; }
+  .s1 { top: 20%; left: 20%; animation-delay: 0s; }
+  .s2 { top: 25%; left: 70%; animation-delay: 1s; font-size: 14px; }
+  .s3 { top: 50%; left: 80%; animation-delay: 1.5s; font-size: 22px; }
+  .s4 { top: 45%; left: 15%; animation-delay: 2s; font-size: 12px; }
   
-  .heart-container { margin-top: 55px; animation: float 4s ease-in-out infinite; filter: drop-shadow(0px 20px 25px rgba(0,0,0,0.3)); }
-  @keyframes float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-12px) scale(1.03); } }
+  @keyframes twinkle { 
+    0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); } 
+    50% { opacity: 1; transform: scale(1.2) rotate(20deg); filter: drop-shadow(0 0 8px var(--heart-1)); } 
+  }
 
-  .interaction-area { margin-top: auto; margin-bottom: 70px; display: flex; flex-direction: column; align-items: center; position: relative; }
+  .top-text { 
+    margin-top: 10vh; font-size: 18px; color: rgba(0,0,0,0.7); font-style: italic; 
+    font-weight: 600; font-family: 'Playfair Display', serif; letter-spacing: 0.5px;
+  }
+  
+  .heart-container { 
+    margin-top: 6vh; animation: floatHeart 4s ease-in-out infinite; 
+    filter: drop-shadow(0px 25px 30px rgba(0,0,0,0.25)); 
+  }
+  @keyframes floatHeart { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-15px) scale(1.05); } }
+
+  .interaction-area { margin-top: auto; margin-bottom: 8vh; display: flex; flex-direction: column; align-items: center; position: relative; }
   .handle { cursor: grab; transition: stroke 0.3s; }
   .handle:active { cursor: grabbing; }
+  
   #pulse { animation: pulseAnim 2s infinite; transform-origin: 30px 120px; }
-  @keyframes pulseAnim { 0% { transform: scale(1); opacity: 0.8; stroke-width: 2; } 100% { transform: scale(1.7); opacity: 0; stroke-width: 0.5; } }
-  .instruction { margin-top: 30px; font-size: 11px; color: rgba(0,0,0,0.6); letter-spacing: 3px; text-transform: uppercase; font-weight: 600; }
+  @keyframes pulseAnim { 
+    0% { transform: scale(1); opacity: 0.9; stroke-width: 2; } 
+    100% { transform: scale(1.8); opacity: 0; stroke-width: 0.5; } 
+  }
+  
+  .instruction { 
+    margin-top: 35px; font-size: 12px; color: rgba(0,0,0,0.7); letter-spacing: 4px; 
+    text-transform: uppercase; font-weight: 700; animation: pulseText 2s infinite;
+  }
+  @keyframes pulseText { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 
-  /* Screen 2 */
+  /* Screen 2 (The Reveal) */
   .screen-2 {
     position: absolute; width: 100%; height: 100%;
     background: var(--s2-bg); color: var(--text-main);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 1s ease 0.2s; z-index: 1; text-align: center;
+    opacity: 0; pointer-events: none; transition: opacity 1.2s ease 0.3s; z-index: 1; text-align: center;
+    padding: 0 20px;
   }
   .screen-2.active { opacity: 1; pointer-events: all; z-index: 3; }
 
-  .tree-bg { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); opacity: 0.12; z-index: -1; }
-  .tree-path { stroke-dasharray: 300; stroke-dashoffset: 300; transition: stroke-dashoffset 2.5s ease-out 0.8s; stroke: #fff;}
+  /* 🌹 Rose Petal Animation CSS */
+  #petals-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0; }
+  .petal {
+    position: absolute; top: -10vh; width: 15px; height: 15px;
+    background: linear-gradient(135deg, #ff4d6d, #c9184a);
+    border-radius: 15px 0 15px 0; /* Rose petal shape */
+    opacity: 0.8; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    animation: fallingPetal linear infinite;
+  }
+  @keyframes fallingPetal {
+    0% { transform: translateY(-10vh) rotate(0deg) scale(0.6); opacity: 0; }
+    10% { opacity: 0.9; }
+    100% { transform: translateY(110vh) rotate(360deg) scale(1.2); opacity: 0; }
+  }
+
+  .tree-bg { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); opacity: 0.15; z-index: -1; }
+  .tree-path { stroke-dasharray: 400; stroke-dashoffset: 400; transition: stroke-dashoffset 3s ease-out 1s; stroke: #fff;}
   .screen-2.active .tree-path { stroke-dashoffset: 0; }
 
-  .avatar-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--text-accent); margin-bottom: 15px; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); opacity: 0; transform: translateY(15px); transition: all 0.8s ease 0.6s;}
+  .avatar-img { 
+    width: 110px; height: 110px; border-radius: 50%; object-fit: cover; 
+    border: 4px solid var(--text-accent); margin-bottom: 20px; display: none; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 15px var(--text-accent); 
+    opacity: 0; transform: translateY(20px) scale(0.9); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s;
+    z-index: 2;
+  }
   
-  .wish-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; margin-bottom: 10px; color: var(--text-accent); opacity: 0; transform: translateY(15px); transition: all 0.8s ease 0.8s; }
-  .receiver-text { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 600; margin-bottom: 5px; opacity: 0; transform: translateY(15px); transition: all 0.8s ease 1s; }
-  .bday-text { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 55px; line-height: 1.1; margin: 0 0 15px 0; text-shadow: 0px 8px 15px rgba(0,0,0,0.5); opacity: 0; transform: translateY(15px); transition: all 0.8s ease 1.2s; }
+  .wish-text { 
+    font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; 
+    margin-bottom: 12px; color: var(--text-accent); letter-spacing: 1px;
+    opacity: 0; transform: translateY(20px); transition: all 0.8s ease 0.8s; z-index: 2;
+  }
   
-  .countdown-box { font-size: 14px; font-weight: 600; background: rgba(0,0,0,0.25); padding: 8px 15px; border-radius: 10px; margin-bottom: 15px; display: none; opacity: 0; transform: translateY(15px); transition: all 0.8s ease 1.3s;}
+  .receiver-text { 
+    font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 5px; 
+    opacity: 0; transform: translateY(20px); transition: all 0.8s ease 1s; z-index: 2;
+  }
   
-  .custom-msg { font-size: 12px; color: var(--text-accent); width: 85%; line-height: 1.6; opacity: 0; transform: translateY(15px); transition: all 0.8s ease 1.4s; }
-  .sender-text { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--heart-1); font-style: italic; margin-top: 25px; opacity: 0; transform: translateY(15px); transition: all 0.8s ease 1.6s; }
+  .bday-text { 
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 60px; line-height: 1.05; 
+    margin: 0 0 20px 0; text-shadow: 0px 10px 20px rgba(0,0,0,0.6); 
+    background: linear-gradient(to bottom, #ffffff, var(--text-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    opacity: 0; transform: translateY(20px); transition: all 0.8s ease 1.2s; z-index: 2;
+  }
+  
+  .countdown-box { 
+    font-size: 15px; font-weight: 500; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
+    padding: 10px 25px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); 
+    margin-bottom: 20px; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    opacity: 0; transform: translateY(20px); transition: all 0.8s ease 1.3s; z-index: 2;
+  }
+  
+  .custom-msg { 
+    font-size: 14px; color: #eee; width: 90%; line-height: 1.7; font-weight: 300;
+    opacity: 0; transform: translateY(20px); transition: all 0.8s ease 1.4s; z-index: 2;
+  }
+  
+  .sender-text { 
+    font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text-accent); font-style: italic; 
+    margin-top: 30px; font-weight: 600;
+    opacity: 0; transform: translateY(20px); transition: all 0.8s ease 1.6s; z-index: 2;
+  }
 
-  .screen-2.active .avatar-img, .screen-2.active .wish-text, .screen-2.active .receiver-text, .screen-2.active .bday-text, .screen-2.active .countdown-box, .screen-2.active .custom-msg, .screen-2.active .sender-text { opacity: 1; transform: translateY(0); }
+  .screen-2.active .avatar-img, .screen-2.active .wish-text, .screen-2.active .receiver-text, 
+  .screen-2.active .bday-text, .screen-2.active .countdown-box, .screen-2.active .custom-msg, 
+  .screen-2.active .sender-text { opacity: 1; transform: translateY(0) scale(1); }
 
-  /* Floating Back Button for Preview */
-  #backToEditBtn { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.7); color: white; border: 1px solid #fff; padding: 10px 20px; border-radius: 20px; z-index: 100; cursor: pointer; display: none; font-family: 'Poppins'; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Floating Back Button */
+  #backToEditBtn { 
+    position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); 
+    background: rgba(0,0,0,0.8); color: white; border: 1px solid rgba(255,255,255,0.3); 
+    padding: 12px 25px; border-radius: 30px; z-index: 100; cursor: pointer; display: none; 
+    font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 500; backdrop-filter: blur(10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.3s;
+  }
+  #backToEditBtn:hover { background: #fff; color: #000; }
 </style>
 </head>
 <body id="mainBody">
 
-<!-- === GENERATOR FORM === -->
+<!-- === 📝 GENERATOR FORM === -->
 <div class="creator-view" id="creator-view">
-  <h2>Create Magic Card ✨</h2>
+  <h2>Magic Card Editor ✨</h2>
   
   <div class="input-group">
     <label>Recipient's Name *</label>
@@ -146,18 +248,18 @@
   </div>
   
   <div class="input-group">
-    <label>Date & Time (For Countdown)</label>
+    <label>Countdown Date & Time</label>
     <input type="datetime-local" id="input-date">
   </div>
 
   <div class="input-group">
-    <label>Photo URL (Optional)</label>
-    <input type="text" id="input-img" placeholder="Paste image link here">
+    <label>Photo URL <span>(Must end with .jpg or .png)</span></label>
+    <input type="text" id="input-img" placeholder="Paste direct image link here">
   </div>
 
   <div class="input-group">
     <label>Custom Message</label>
-    <textarea id="input-msg" rows="2" placeholder="May all your dreams come true!"></textarea>
+    <textarea id="input-msg" rows="3" placeholder="May all your dreams come true!"></textarea>
   </div>
 
   <div class="input-group">
@@ -168,29 +270,30 @@
   <div class="input-group">
     <label>Card Theme</label>
     <select id="input-theme">
-      <option value="theme-rose">🌸 Romantic Rose</option>
+      <option value="theme-rose">🌸 Romantic Rose (With Petals)</option>
       <option value="theme-gold">👑 Luxury Gold</option>
       <option value="theme-neon">⚡ Cyber Neon</option>
     </select>
   </div>
   
   <div class="btn-group">
-    <button class="btn btn-preview" onclick="previewCard()">👁️ Preview</button>
+    <button class="btn btn-preview" onclick="previewCard()">👁️ Live Preview</button>
     <button class="btn btn-primary" onclick="generateLink()">✨ Generate Link</button>
   </div>
 
   <div class="result-area" id="result-area">
-    <label style="font-size: 12px; color: #ccc; margin-bottom: 5px; display:block;">Your Shareable Link:</label>
+    <label style="font-size: 12px; color: #ccc; margin-bottom: 8px; display:block;">Your Shareable Link is Ready:</label>
     <input type="text" class="link-box" id="generated-link" readonly>
-    <div class="btn-group" style="margin-top: 5px;">
+    <div class="btn-group" style="margin-top: 0;">
       <button class="btn btn-preview" onclick="copyLink()">📋 Copy Link</button>
     </div>
     <button class="btn btn-whatsapp" onclick="shareWhatsApp()">💬 Share on WhatsApp</button>
   </div>
 </div>
 
-<!-- === ACTUAL CARD UI (ORIGINAL DESIGN) === -->
+<!-- === 🎁 ACTUAL CARD UI === -->
 <div class="card-container" id="card-view">
+  
   <!-- Screen 1: Pull String -->
   <div class="screen-1" id="screen1">
     <div class="sparkles">
@@ -199,9 +302,11 @@
       <div class="sparkle s3">✨</div>
       <div class="sparkle s4">✨</div>
     </div>
+    
     <div class="top-text">a little something, for you</div>
+    
     <div class="heart-container">
-      <svg width="130" height="130" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="140" height="140" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="heartGrad" x1="12" y1="2" x2="12" y2="22" gradientUnits="userSpaceOnUse">
             <stop stop-color="var(--heart-1)" id="gradStop1"/>
@@ -211,13 +316,14 @@
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#heartGrad)"/>
       </svg>
     </div>
+    
     <div class="interaction-area">
       <svg width="60" height="180" viewBox="0 0 60 180" id="svg-coil">
-        <line id="string" x1="30" y1="0" x2="30" y2="120" stroke="var(--rope-color)" stroke-width="2.5" stroke-dasharray="4 4" />
-        <circle id="pulse" cx="30" cy="120" r="16" fill="transparent" stroke="var(--pulse-color)" stroke-width="2" />
-        <circle id="pull-ring" class="handle" cx="30" cy="120" r="16" fill="transparent" stroke="#2c2c2c" stroke-width="4" stroke-linecap="round"/>
-        <circle id="pull-ring-inner" class="handle" cx="30" cy="120" r="13" fill="transparent" stroke="#8a8a8a" stroke-width="1"/>
-        <circle id="pull-dot" class="handle" cx="30" cy="106" r="4" fill="var(--pulse-color)" />
+        <line id="string" x1="30" y1="0" x2="30" y2="120" stroke="var(--rope-color)" stroke-width="2.5" stroke-dasharray="5 5" />
+        <circle id="pulse" cx="30" cy="120" r="18" fill="transparent" stroke="var(--pulse-color)" stroke-width="2" />
+        <circle id="pull-ring" class="handle" cx="30" cy="120" r="18" fill="transparent" stroke="#222" stroke-width="5" stroke-linecap="round"/>
+        <circle id="pull-ring-inner" class="handle" cx="30" cy="120" r="14" fill="transparent" stroke="#aaa" stroke-width="1.5"/>
+        <circle id="pull-dot" class="handle" cx="30" cy="106" r="4.5" fill="var(--pulse-color)" />
       </svg>
       <div class="instruction">Pull & Release</div>
     </div>
@@ -225,11 +331,16 @@
 
   <!-- Screen 2: Reveal & Celebration -->
   <div class="screen-2" id="screen2">
+    <!-- 🌹 Rose Petal Container -->
+    <div id="petals-container"></div>
+    
     <svg class="tree-bg" width="350" height="400" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <path class="tree-path" d="M50,100 Q48,70 50,50 Q45,30 30,20 M50,50 Q55,30 70,20 M45,60 Q35,45 25,45 M55,60 Q65,45 75,45 M48,35 Q40,25 35,15 M52,35 Q60,25 65,15 M25,45 Q20,35 15,35 M75,45 Q80,35 85,35" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path class="tree-path" d="M50,100 Q48,70 50,50 Q45,30 30,20 M50,50 Q55,30 70,20 M45,60 Q35,45 25,45 M55,60 Q65,45 75,45 M48,35 Q40,25 35,15 M52,35 Q60,25 65,15 M25,45 Q20,35 15,35 M75,45 Q80,35 85,35" stroke-width="1.5" fill="none" stroke-linecap="round"/>
     </svg>
     
-    <img id="dynamic-avatar" class="avatar-img" src="" alt="Avatar">
+    <!-- Avatar Image with onError handler to hide it if link is broken -->
+    <img id="dynamic-avatar" class="avatar-img" src="" alt="Avatar" onerror="this.style.display='none';">
+    
     <div class="wish-text">make a wish...</div>
     <div class="receiver-text" id="dynamic-name">Dear Radhika,</div>
     <div class="bday-text">Happy<br>Birthday</div>
@@ -241,7 +352,7 @@
   </div>
 </div>
 
-<button id="backToEditBtn" onclick="closePreview()">🔙 Back to Edit</button>
+<button id="backToEditBtn" onclick="closePreview()">🔙 Back to Editor</button>
 
 <script>
   // --- STATE & ROUTING ---
@@ -251,11 +362,12 @@
   const paramMsg = urlParams.get('m');
   const paramSender = urlParams.get('s');
   const paramImg = urlParams.get('img');
-  const paramTheme = urlParams.get('t') || 'theme-rose';
+  const paramTheme = urlParams.get('t') || '';
 
   const creatorView = document.getElementById('creator-view');
   const cardView = document.getElementById('card-view');
   let countdownInterval;
+  let petalInterval;
 
   if (paramName && paramSender) {
     // Show Card View (Received Link)
@@ -268,7 +380,7 @@
     creatorView.style.display = 'flex';
     cardView.style.display = 'none';
     
-    // Live theme update in form
+    // Live theme update in form background
     document.getElementById('input-theme').addEventListener('change', (e) => {
       document.body.className = e.target.value;
     });
@@ -276,13 +388,14 @@
 
   // --- FORM FUNCTIONS ---
   function setupCardData(n, d, m, s, img, t) {
-    document.body.className = t;
+    if(t) document.body.className = t;
     document.getElementById('dynamic-name').textContent = `Dear ${n},`;
     document.getElementById('dynamic-sender').textContent = `~ ${s}`;
-    document.getElementById('dynamic-msg').textContent = m || 'to someone worth celebrating';
+    document.getElementById('dynamic-msg').textContent = m || 'May every dream you hold close turn into something beautiful.';
     
     if(img) {
       document.getElementById('dynamic-avatar').src = img;
+      // We set display block here, but if the image fails, the onerror="" will hide it again.
       document.getElementById('dynamic-avatar').style.display = 'block';
     } else {
       document.getElementById('dynamic-avatar').style.display = 'none';
@@ -312,19 +425,24 @@
     document.getElementById('screen1').style.transform = 'none';
     document.getElementById('screen1').style.opacity = '1';
     document.getElementById('screen2').classList.remove('active');
-    updateSVG(120); // Reset string
+    updateSVG(120); // Reset string position
+    
     if(countdownInterval) clearInterval(countdownInterval);
+    if(petalInterval) clearInterval(petalInterval);
+    
+    document.getElementById('dynamic-timer').style.display = 'none';
+    document.getElementById('petals-container').innerHTML = ''; // Clear petals
 
     cardView.style.display = 'none';
     document.getElementById('backToEditBtn').style.display = 'none';
     creatorView.style.display = 'flex';
-    document.body.className = document.getElementById('input-theme').value;
+    document.body.className = document.getElementById('input-theme').value || 'theme-rose';
   }
 
   function generateLink() {
     const n = document.getElementById('input-name').value.trim();
     const s = document.getElementById('input-sender').value.trim();
-    if (!n || !s) return alert('Recipient Name and Sender Name are required!');
+    if (!n || !s) return alert('Please fill in both Recipient and Your Name!');
 
     const d = document.getElementById('input-date').value;
     const m = document.getElementById('input-msg').value.trim();
@@ -339,13 +457,19 @@
     
     document.getElementById('generated-link').value = baseUrl + query;
     document.getElementById('result-area').style.display = 'block';
+    document.getElementById('result-area').scrollIntoView({ behavior: 'smooth' });
   }
 
   function copyLink() {
     const linkInput = document.getElementById('generated-link');
     linkInput.select();
-    document.execCommand("copy");
-    alert('Link Copied Successfully!');
+    linkInput.setSelectionRange(0, 99999);
+    try {
+      navigator.clipboard.writeText(linkInput.value).then(() => alert('Link Copied Successfully!'));
+    } catch(err) {
+      document.execCommand("copy");
+      alert('Link Copied Successfully!');
+    }
   }
 
   function shareWhatsApp() {
@@ -378,7 +502,36 @@
     }, 1000);
   }
 
-  // --- PULL STRING LOGIC (ORIGINAL) ---
+  // --- 🌹 ROSE PETAL ANIMATION ---
+  function createPetals() {
+    const container = document.getElementById('petals-container');
+    container.innerHTML = '';
+    
+    // Only show petals if theme is Rose
+    if(document.body.className !== 'theme-rose') return;
+
+    let petalCount = 0;
+    const maxPetals = 25; // Keep it optimized for mobile
+    
+    petalInterval = setInterval(() => {
+      if(petalCount >= maxPetals) {
+        clearInterval(petalInterval);
+        return;
+      }
+      let petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = (Math.random() * 4 + 4) + 's'; // 4s to 8s fall time
+      petal.style.animationDelay = (Math.random() * 2) + 's';
+      container.appendChild(petal);
+      
+      // Remove petal after animation to save memory
+      setTimeout(() => { petal.remove(); }, 10000);
+      petalCount++;
+    }, 300);
+  }
+
+  // --- PULL STRING PHYSICS ---
   const ring = document.getElementById('pull-ring');
   const ringInner = document.getElementById('pull-ring-inner');
   const dot = document.getElementById('pull-dot');
@@ -389,10 +542,9 @@
   let startY = 0;
   const baseY = 120;
   let currentY = baseY;
-  const maxY = 240; 
+  const maxY = 250; 
 
   function initPullLogic() {
-    // Clear old listeners if any
     ring.removeEventListener('mousedown', startDrag);
     window.removeEventListener('mousemove', moveDrag);
     window.removeEventListener('mouseup', endDrag);
@@ -400,9 +552,90 @@
     window.removeEventListener('touchmove', moveDrag);
     window.removeEventListener('touchend', endDrag);
 
-    // Add fresh listeners
     ring.addEventListener('mousedown', startDrag);
     window.addEventListener('mousemove', moveDrag, {passive: false});
     window.addEventListener('mouseup', endDrag);
     ring.addEventListener('touchstart', startDrag, {passive: false});
-    window.
+    window.addEventListener('touchmove', moveDrag, {passive: false});
+    window.addEventListener('touchend', endDrag);
+  }
+
+  const startDrag = (e) => {
+    isDragging = true;
+    startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+    ring.style.stroke = "var(--pulse-color)"; 
+    if(pulse) pulse.style.display = 'none';
+  };
+
+  const moveDrag = (e) => {
+    if (!isDragging) return;
+    if(e.cancelable) e.preventDefault(); 
+    const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+    
+    // Smooth resistance logic
+    let diff = clientY - startY;
+    currentY = baseY + (diff * 0.8); 
+    
+    if (currentY < baseY) currentY = baseY;
+    if (currentY > maxY) currentY = maxY;
+    updateSVG(currentY);
+  };
+
+  const endDrag = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    ring.style.stroke = "#222";
+    if (currentY > baseY + 80) { triggerAnimation(); } 
+    else { snapBack(); if(pulse) pulse.style.display = 'block'; }
+  };
+
+  function updateSVG(y) {
+    ring.setAttribute('cy', y);
+    ringInner.setAttribute('cy', y);
+    dot.setAttribute('cy', y - 14);
+    string.setAttribute('y2', y);
+  }
+
+  function snapBack() {
+    let interval = setInterval(() => {
+      currentY -= (currentY - baseY) * 0.3; 
+      if (currentY <= baseY + 1) { currentY = baseY; clearInterval(interval); }
+      updateSVG(currentY);
+    }, 16);
+  }
+
+  function triggerAnimation() {
+    let bounce = baseY - 25; 
+    updateSVG(bounce);
+    setTimeout(() => updateSVG(baseY), 100);
+
+    const s1 = document.getElementById('screen1');
+    s1.style.transform = 'scale(1.8) translateY(-60px)';
+    s1.style.opacity = '0';
+
+    setTimeout(() => {
+      document.getElementById('screen2').classList.add('active');
+      fireConfetti();
+      createPetals(); // Trigger Rose Petals Animation
+    }, 450);
+  }
+
+  function fireConfetti() {
+    const duration = 6000;
+    const end = Date.now() + duration;
+    
+    // Get colors based on theme
+    const theme = document.body.className;
+    let colors = ['#ffffff', '#ff9bc2', '#d61c60']; // Default Rose
+    if(theme === 'theme-gold') colors = ['#ffffff', '#ffd54f', '#ff8f00'];
+    if(theme === 'theme-neon') colors = ['#ffffff', '#18ffff', '#00e5ff'];
+
+    (function frame() {
+      confetti({ particleCount: 6, angle: 60, spread: 60, origin: { x: 0 }, colors: colors, disableForReducedMotion: true });
+      confetti({ particleCount: 6, angle: 120, spread: 60, origin: { x: 1 }, colors: colors, disableForReducedMotion: true });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    }());
+  }
+</script>
+</body>
+</html>
